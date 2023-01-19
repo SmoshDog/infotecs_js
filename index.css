@@ -2,7 +2,7 @@
   overflow: auto;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 900px) {
   .table-container {
     width: 50%;
   }
