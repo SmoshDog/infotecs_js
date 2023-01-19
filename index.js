@@ -1,2 +1,7 @@
 "use strict";
-console.log("Хуй");
+
+import { customers } from "./customers.js";
+
+customers.forEach((customer) => {
+  console.log(customer);
+});
