@@ -4,16 +4,19 @@ import { customers } from "./customers.js";
 
 const customersTableTbody = document.querySelector("#customers-table tbody");
 
-const clients = customers.map((client) => ({
+window.clients = customers.map((client) => ({
   firstName: client.name.firstName,
   lastName: client.name.lastName,
   about: client.about,
   eyeColor: client.eyeColor,
 }));
 
+window.onKlik = (index) => {
+  console.log(window.clients[index]);
+};
 const CustomersTable = () => {
   return `
-    <div class="table-container">
+  <div class="table-container">
       <table class="table" id="customers-table">
         <thead>
           <tr>
@@ -24,10 +27,10 @@ const CustomersTable = () => {
           </tr>
         </thead>
         <tbody>
-          ${clients
+          ${window.clients
             .map(
-              (client) => `
-              <tr>
+              (client, index) => `
+              <tr onclick="onKlik(${index});">
                 <td>${client.firstName}</td>
                 <td>${client.lastName}</td>
                 <td>
