@@ -10,25 +10,57 @@ const clients = customers.map((client) => ({
   about: client.about,
   eyeColor: client.eyeColor,
 }));
-// console.log(clients);
 
-const tr = document.createElement("tr");
-const td = document.createElement("td");
-const keysOfClientObject = Object.keys(clients[0]);
+const CustomersTable = () => {
+  return `
+    <div class="table-container">
+      <table class="table" id="customers-table">
+        <thead>
+          <tr>
+            <th>Имя (firstName)</th>
+            <th>Фамилия (lastName)</th>
+            <th>Описание (about)</th>
+            <th>Цвет глаз (eyeColor)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${clients
+            .map(
+              (client) => `
+              <tr>
+                <td>${client.firstName}</td>
+                <td>${client.lastName}</td>
+                <td>
+                  <div class="table__about-text">${client.about}</div>
+                </td>
+                <td>${client.eyeColor}</td>
+              </tr>
+            `
+            )
+            .join("")}
+        </tbody>
 
-// console.log(keysOfClientObject);
+      </table>
+        <div class="changes-form"> 
+          <form class="changes">
+            <input class="input" id="firstName" type='text'/>
+            <input class="input" id="lastName" type='text'/>
+            <input class="input" id="about" type='text'/>
+            <input class="input" id="eyeColor" type='text'/>
+            <button class='cancel' type='button' >Отменить</button>
+            <button class='submit' type='submit' >Сохранить </button>
+          </form>
+        </div>
 
-for (let i = 0; i < clients.length; i++) {
-  const trCloned = tr.cloneNode(false);
-  for (let j = 0; j < keysOfClientObject.length; j++) {
-    const tdCloned = td.cloneNode(false);
-    const cellValue = clients[i][keysOfClientObject[j]];
-    // console.log(clients[i]);
-    tdCloned.appendChild(document.createTextNode(cellValue || ""));
-    trCloned.appendChild(tdCloned);
-  }
+      </div>
+  `;
+};
 
-  customersTableTbody.appendChild(trCloned);
+const App = () => {
+  return `${CustomersTable()}`;
+};
+
+function render() {
+  document.getElementById("app").innerHTML = App();
 }
-
-// https://stackoverflow.com/a/21065846
+render();
