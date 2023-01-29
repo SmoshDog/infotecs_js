@@ -51,9 +51,10 @@
   background-color: #eee;
   margin-top: 60px;
 }
-
-.changes {
-  /* padding-left: 12px; */
+.button {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .submit {
   background-color: #04aa6d;
@@ -71,10 +72,6 @@
   /* padding: 3px 6px 3px 6px; */
   /* margin: 3px; */
   cursor: pointer;
-}
-
-.input {
-  /* margin-top: 3px; */
 }
 
 @media only screen and (min-width: 900px) {

@@ -49,8 +49,73 @@ const replaceData = (index) => {
   const aboutForm = document.querySelector("#about").value;
   const eyeColorForm = document.querySelector("#eyeColor").value;
   // Замена значений в таблице
-  document.querySelector("#fn-" + index).textContent = fnForm;
-  document.querySelector("#ln-" + index).textContent = lnForm;
-  document.querySelector("#a-" + index).textContent = aboutForm;
-  document.querySelector("#ec-" + index).textContent = eyeColorForm;
+  if (fnForm != "") {
+    document.querySelector("#fn-" + index).textContent = fnForm;
+  }
+  if (lnForm != "") {
+    document.querySelector("#ln-" + index).textContent = lnForm;
+  }
+  if (aboutForm != "") {
+    document.querySelector("#a-" + index).textContent = aboutForm;
+  }
+  if (eyeColorForm != "") {
+    document.querySelector("#ec-" + index).textContent = eyeColorForm;
+  }
+};
+
+// Сортировка
+
+window.sortTable = (n) => {
+  var table,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.getElementById("customers-table"); // Сортируемая таблица
+  switching = true;
+  dir = "asc"; // Направление от "меньшего" к "большему"
+
+  // Цикл, работающий до следующей смены направления сортировки
+
+  while (switching) {
+    switching = false;
+    rows = table.getElementsByTagName("tr");
+
+    for (i = 1; i < rows.length - 1; i++) {
+      // Цикл проходит через все ряды кроме первого - т.к. в нем содержатся заголовкки
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("td")[n]; // Текущий элемент
+      y = rows[i + 1].getElementsByTagName("td")[n]; // Следующий элемент
+
+      //  Проверка по "возрастанию" и "убыванию"
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      // Если флаг отмечен, то делаем замену и отмечаем во втором флаге что была сделана замена
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Делаем пометку, что была сделана на замена
+      switchcount++;
+    } else {
+      // Если не было сделано замен, а текущее положение сортировки "по возрастанию" то развернуть ее и просортировать
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
 };
