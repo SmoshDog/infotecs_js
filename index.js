@@ -1,69 +1,56 @@
 "use strict";
 
-import { customers } from "./customers.js";
+import { customers } from "./customers.js"; // Импорт базы данных клиентов
 
-const customersTableTbody = document.querySelector("#customers-table tbody");
-
-window.clients = customers.map((client) => ({
-  firstName: client.name.firstName,
-  lastName: client.name.lastName,
-  about: client.about,
-  eyeColor: client.eyeColor,
-}));
-
-window.onKlik = (index) => {
-  console.log(window.clients[index]);
+// Функция создания таблицы из базы данных клиентов
+const createTable = (db) => {
+  for (let i = 0; i < db.length; i++) {
+    let row = `<tr onclick="showForm(${i})">
+        <td id="fn-${i}">${db[i].name.firstName}</td>
+        <td id="ln-${i}">${db[i].name.lastName}</td>
+                        <td>
+                        <div id="a-${i}" class = "table-about">${db[i].about}</div>
+                        </td>
+                        <td id="ec-${i}">${db[i].eyeColor}</td>
+                        </tr>   
+                        `;
+    document.getElementById("t-body").innerHTML += row;
+  }
 };
-const CustomersTable = () => {
-  return `
-  <div class="table-container">
-      <table class="table" id="customers-table">
-        <thead>
-          <tr>
-            <th>Имя (firstName)</th>
-            <th>Фамилия (lastName)</th>
-            <th>Описание (about)</th>
-            <th>Цвет глаз (eyeColor)</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${window.clients
-            .map(
-              (client, index) => `
-              <tr onclick="onKlik(${index});">
-                <td>${client.firstName}</td>
-                <td>${client.lastName}</td>
-                <td>
-                  <div class="table__about-text">${client.about}</div>
-                </td>
-                <td>${client.eyeColor}</td>
-              </tr>
-            `
-            )
-            .join("")}
-        </tbody>
+// Использован цикл for (не for ... of) для использования индексов в процессе создания id для каждой клетки таблицы
+// Создание таблицы
+createTable(customers);
 
-      </table>
-        <div class="changes-form"> 
-          <form class="changes">
-            <input class="input" id="firstName" type='text'/>
-            <input class="input" id="lastName" type='text'/>
-            <input class="input" id="about" type='text'/>
-            <input class="input" id="eyeColor" type='text'/>
-            <button class='cancel' type='button' >Отменить</button>
-            <button class='submit' type='submit' >Сохранить </button>
-          </form>
-        </div>
+//  Функция для отображения окна формы и получения строки таблицы в которой проводятся изменения
+window.showForm = (index) => {
+  document.querySelector("#changesForm").style.display = "block";
+  window.currentDt = index;
+};
+//  Функции по работе с формой
 
-      </div>
-  `;
+//  Клик по кнопке "сохранить"
+document.querySelector(".submit").onclick = (event) => {
+  event.preventDefault(); // Предотвращение обновления страницы
+  replaceData(window.currentDt);
+  document.querySelector("form").reset(); //Удаление данных из полей инпута
+  document.querySelector("#changesForm").style.display = "none"; // Скрытие окна формы
+};
+//  Клик по кнопке "Отменить" (скрыть окно)
+document.querySelector("button").onclick = () => {
+  document.querySelector("#changesForm").style.display = "none";
 };
 
-const App = () => {
-  return `${CustomersTable()}`;
-};
+//  Функция для замены данных в полях
 
-function render() {
-  document.getElementById("app").innerHTML = App();
-}
-render();
+const replaceData = (index) => {
+  //  Значения из формы
+  const fnForm = document.querySelector("#firstName").value;
+  const lnForm = document.querySelector("#lastName").value;
+  const aboutForm = document.querySelector("#about").value;
+  const eyeColorForm = document.querySelector("#eyeColor").value;
+  // Замена значений в таблице
+  document.querySelector("#fn-" + index).textContent = fnForm;
+  document.querySelector("#ln-" + index).textContent = lnForm;
+  document.querySelector("#a-" + index).textContent = aboutForm;
+  document.querySelector("#ec-" + index).textContent = eyeColorForm;
+};

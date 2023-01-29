@@ -30,7 +30,7 @@
   background-color: #04aa6d;
   color: white;
 }
-.table__about-text {
+.table-about {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

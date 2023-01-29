@@ -10,6 +10,35 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="table-container">
+        <table class="table" id="customers-table">
+          <thead>
+            <tr>
+              <th>Имя (firstName)</th>
+              <th>Фамилия (lastName)</th>
+              <th>Описание (about)</th>
+              <th>Цвет глаз (eyeColor)</th>
+            </tr>
+          </thead>
+          <tbody id="t-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="changes-form" id="changesForm">
+      <form class="changes">
+        <input class="input" id="firstName" type="text" placeholder="Имя" />
+        <input class="input" id="lastName" type="text" placeholder="Фамилия" />
+        <input class="input" id="about" type="text" placeholder="Описание" />
+        <input
+          class="input"
+          id="eyeColor"
+          type="text"
+          placeholder="Цвет Глаз"
+        />
+        <button class="cancel" type="reset">Отменить</button>
+        <button class="submit" type="submit">Сохранить</button>
+      </form>
+    </div>
   </body>
 </html>
